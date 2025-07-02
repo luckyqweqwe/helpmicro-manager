@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>HELP-MICRO Manager</title>
+</head>
+<body>
+  <div class="app-container">
+    <nav class="sidebar">
+      <h2>РРО Менеджер</h2>
+
+      <div class="rro-selection">
+        <div class="rro-selector-wrapper">
+          <select id="rroSelector">
+            <option value="">-- Оберіть РРО --</option>
+          </select>
+        </div>
+        <div id="selectedRROInfo" class="rro-info">
+            <p>Не обрано РРО.</p>
+        </div>
+        <button id="manageConfigsBtn" class="manage-btn">⚙️ Керувати РРО</button>
+      </div>
+
+      <ul class="menu-list">
+        <li><button id="viewStateBtn" data-view="state">Інфо про РРО</button></li>
+        <li><button id="viewKsefBtn" data-view="ksef">Робота з КСЕФ</button></li>
+        <li><button id="viewPluBtn" data-view="plu">Керування товарами</button></li>
+        <li><button id="viewFunctionsBtn" data-view="functions">Функції</button></li>
+        <li><button id="generalSettingsBtn">Загальні налаштування</button></li>
+      </ul>
+
+      <button id="aboutAppBtn" class="general-settings-btn">Про додаток</button>
+
+    </nav>
+
+    <main class="main-content">
+      <div id="notification" class="notification"></div>
+      <div id="main-view-container">
+      </div>
+    </main>
+  </div>
+
+  <div id="settingsModal" class="modal">
+    <div class="modal-content" style="width: 800px; max-width: 95%;">
+      <span class="close">&times;</span><h2>Керування конфігураціями РРО</h2>
+      <div id="rro-configs-list-container" style="width: 100%; margin-bottom: 20px;"></div>
+      <div class="modal-buttons-container">
+          <button id="discoverDevicesBtn" class="action-button secondary">Знайти пристрої</button>
+          <button id="addNewRROBtn" class="action-button">Додати новий РРО</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="discoveryModal" class="modal">
+    <div class="modal-content" style="width: 600px;">
+        <span class="close">&times;</span><h2>Знайдені пристрої</h2>
+        <div id="discovery-status">Пошук пристроїв у мережі...</div>
+        <ul id="discovery-results-list" class="discovery-list">
+            </ul>
+    </div>
+  </div>
+
+  <div id="editRROModal" class="modal">
+      <div class="modal-content">
+          <span class="close">&times;</span><h2 id="editRROModalTitle">Додати РРО</h2>
+          <form id="rroEditForm">
+              <input type="hidden" id="rro-id-input">
+              <label for="rro-name-input">Назва:</label><input type="text" id="rro-name-input" required>
+              <label for="rro-address-input">IP Адреса:</label><input type="text" id="rro-address-input" required>
+              <label for="rro-port-input">Порт:</label><input type="number" id="rro-port-input" value="80" required>
+              <label for="rro-username-input">Ім'я користувача:</label><input type="text" id="rro-username-input" required>
+              <label for="rro-password-input">Пароль:</label><input type="password" id="rro-password-input" required>
+              <button type="submit" id="saveRROBtn" class="action-button">Зберегти</button>
+          </form>
+      </div>
+  </div>
+  
+  <div id="generalSettingsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span><h2>Загальні налаштування</h2>
+        <div class="settings-section">
+            <h4>Налаштування КСЕФ</h4>
+            <div class="form-group"><label>Каталог для збереження звітів:</label>
+                <div class="path-display-wrapper">
+                    <p id="ksefPathDisplay"></p><button id="changeKsefPathBtn" class="action-button small">Змінити...</button>
+                </div>
+            </div>
+        </div>
+        <div class="settings-section">
+            <h4>Звуковий супровід</h4>
+            <div class="form--group" style="flex-direction: row; align-items: center; gap: 10px;">
+                <input type="checkbox" id="enableSoundCheckbox" style="width: auto;">
+                <label for="enableSoundCheckbox" style="margin: 0;">Увімкнути звук під час завантаження КСЕФ</label>
+            </div>
+            <div class="form-group">
+                <label for="melodySelect">Мелодія:</label>
+                <select id="melodySelect" class="input-field" style="width: 100%;">
+                    <option value="simple">Простий сигнал</option>
+                    <option value="double">Подвійний</option>
+                    <option value="alarm">Тривога</option>
+                    <option value="mario">Супер Маріо</option>
+                    <option value="imperial_march">Імперський марш</option>
+                </select>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div id="filenameModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span><h2>Збереження звіту КСЕФ</h2>
+        <div class="form-group">
+            <label for="filenameInput">Ім'я файлу:</label>
+            <input type="text" id="filenameInput" style="width: 100%; box-sizing: border-box;">
+        </div>
+        <div class="modal-buttons">
+            <button id="cancelFilenameBtn" class="action-button secondary">Скасувати</button>
+            <button id="saveFilenameBtn" class="action-button">Зберегти</button>
+        </div>
+    </div>
+  </div>
+
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <h2 id="confirmationTitle">Підтвердження дії</h2>
+        <p id="confirmationMessage" style="text-align: center; line-height: 1.5;"></p>
+        <div class="modal-buttons">
+            <button id="confirmCancelBtn" class="action-button secondary">Скасувати</button>
+            <button id="confirmOkBtn" class="action-button">OK</button>
+        </div>
+    </div>
+  </div>
+
+  <div id="flagsHelperModal" class="modal">
+    <div class="modal-content" style="width: 400px;">
+        <span class="close">&times;</span><h2>Налаштування прапорців</h2>
+        <div id="flags-checkbox-container">
+        </div>
+        <div class="flags-summary">
+            <span>Підсумкове значення:</span>
+            <strong id="flags-total-value">0</strong>
+        </div>
+        <div class="modal-buttons">
+            <button id="applyFlagsBtn" class="action-button">Застосувати</button>
+        </div>
+    </div>
+  </div>
+  
+  <div id="aboutAppModal" class="modal">
+    <div class="modal-content" style="width: 550px;">
+        <span class="close">&times;</span><h2>Про додаток Help-Micro Manager</h2>
+        <div class="settings-section">
+            <p><strong>Версія:</strong> 1.1.0</p>
+            <p><strong>Опис:</strong> Десктопний додаток для зручної взаємодії з фіскальними реєстраторами серії MG виробництва Help-Micro.</p>
+        </div>
+        <div class="settings-section">
+            <h4>Список змін (Changelog):</h4>
+            <ul style="max-height: 150px; overflow-y: auto; padding-left: 20px;">
+                <li>Додано повноекранний режим та горячі клавіші.</li>
+                <li>Додано звуковий супровід для завантажень.</li>
+                <li>Покращено інтерфейс керування товарами (PLU).</li>
+                <li>Додано вікно "Про додаток".</li>
+            </ul>
+        </div>
+        <div class="settings-section">
+            <h4>Перевірка оновлень</h4>
+            <div id="update-info">Натисніть кнопку для перевірки.</div>
+            <button id="checkForUpdateBtn" class="action-button">Перевірити наявність оновлень</button>
+        </div>
+        <div class="settings-section">
+            <h4>Контакти</h4>
+            <p><strong>Автор:</strong> Lukach Ishtvan</p>
+            <p>З питань та пропозицій звертайтесь на пошту або в Telegram.</p>
+        </div>
+    </div>
+  </div>
+
+  <script type="module" src="renderer.js"></script>
+</body>
+</html>

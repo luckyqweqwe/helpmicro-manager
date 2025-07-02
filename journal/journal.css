@@ -1,0 +1,126 @@
+/* --- Головний файл стилів для вікна перегляду --- */
+
+/* --- Імпорт компонентів --- */
+@import url('./components/report-forms.css');
+@import url('./components/product-report.css');
+@import url('./components/z-report-list.css');
+
+/* --- Змінні та Основні Стилі --- */
+:root {
+    /* Кольори */
+    --primary-color: #4CAF50;
+    --primary-color-dark: #45a049;
+    --secondary-color: #6c757d;
+    --secondary-color-dark: #5a6268;
+    --background-color: #f4f4f9;
+    --card-background: #fff;
+    --text-color: #333;
+    --text-muted: #555;
+    --border-color: #ddd;
+    /* Розміри */
+    --border-radius: 6px;
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    --spacing-unit: 15px;
+    /* Шрифти */
+    --font-family: 'Arial', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: var(--spacing-unit);
+}
+
+h1, h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+h2 {
+    color: var(--text-muted);
+    margin-top: calc(var(--spacing-unit) * 2);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: calc(var(--spacing-unit) * 0.5);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: calc(var(--spacing-unit) * 1.5);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+.button {
+    padding: 10px var(--spacing-unit);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: calc(var(--border-radius) * 0.75);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button:hover:not(:disabled) {
+    background-color: var(--primary-color-dark);
+}
+
+.button-secondary {
+    background-color: var(--secondary-color);
+}
+
+.button-secondary:hover:not(:disabled) {
+    background-color: var(--secondary-color-dark);
+}
+
+.input-field,
+select.input-field {
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: calc(var(--border-radius) * 0.75);
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+input[type="date"].input-field {
+    min-width: 150px;
+    width: auto;
+}
+
+.status-message {
+    margin-top: var(--spacing-unit);
+    font-weight: bold;
+}
+
+.status-message.error {
+    color: red;
+}
+
+.status-message.success {
+    color: var(--primary-color);
+}
+
+
+/* --- Адаптивність --- */
+@media (max-width: 1024px) {
+    .button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

@@ -1,0 +1,177 @@
+/* --- Стилі для детального списку Z-звітів --- */
+
+.detailed-reports-section {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-top: 0; /* Прибираємо верхній відступ, щоб фіксований заголовок не перекривав контент */
+}
+
+.report-search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    position: sticky;
+    top: 0;
+    background-color: var(--card-background);
+    z-index: 2;
+    padding: calc(var(--spacing-unit) * 0.5) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-search {
+    display: flex;
+    gap: calc(var(--spacing-unit) * 0.5);
+    align-items: center;
+}
+
+#reportSearchInput {
+    width: 150px;
+}
+
+#scrollToReportBtn {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.output-container .report {
+    margin: var(--spacing-unit) 0;
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-unit);
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: var(--box-shadow);
+}
+
+.output-container .report:hover {
+    background-color: #f1f1f1;
+}
+
+.output-container .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.output-container .toggle-icon {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: var(--primary-color);
+}
+
+.output-container .details {
+    display: none;
+    margin-top: var(--spacing-unit);
+    padding-left: var(--spacing-unit);
+    border-left: 3px solid var(--primary-color);
+    margin-bottom: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: 12px;
+}
+
+.details th, .details td {
+    border: 1px solid var(--border-color);
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.details th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.details .check-header-row td {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+.details .check-header-row td:hover {
+    background-color: #d1d9e0;
+}
+
+.details .check-details-content {
+    padding: var(--spacing-unit);
+    background-color: #fdfdfd;
+    border: 1px dashed var(--border-color);
+    margin: 5px 0;
+    display: none;
+}
+
+.details .check-item {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.details .check-item strong {
+    color: var(--text-muted);
+}
+
+.z-report-summary {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-unit);
+    margin-top: var(--spacing-unit);
+    font-size: 0.9em;
+    line-height: 1.6;
+    display: none; /* by default */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: calc(var(--spacing-unit) * 0.5) var(--spacing-unit);
+}
+
+.z-report-summary strong {
+    color: var(--text-muted);
+}
+
+.z-report-summary span {
+    display: block;
+}
+
+.check-details-content .payment-details {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-color);
+}
+
+/* Ширина колонок для таблиці деталей */
+.details-table th:nth-child(1), .details-table td:nth-child(1) { width: 80px; } /* Тип */
+.details-table th:nth-child(2), .details-table td:nth-child(2) { width: 60px; } /* Номер */
+.details-table th:nth-child(3), .details-table td:nth-child(3) { width: 150px; } /* Дата та час */
+.details-table th:nth-child(4), .details-table td:nth-child(4) { width: 80px; } /* Сума */
+.details-table th:nth-child(5), .details-table td:nth-child(5) { width: 80px; } /* Деталі */
+
+
+/* --- Адаптивність для списку звітів --- */
+@media (max-width: 1024px) {
+    .details-table {
+        font-size: 10px;
+    }
+    .details-table th,
+    .details-table td {
+        padding: 4px 6px;
+        max-width: 80px;
+    }
+    .z-report-summary {
+        grid-template-columns: 1fr;
+        font-size: 0.85em;
+    }
+}

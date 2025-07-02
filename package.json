@@ -1,0 +1,47 @@
+{
+    "name": "helpmicro-manager",
+    "version": "1.1.0",
+    "description": "Electron application for interacting with MG series Fiscals",
+    "main": "main.js",
+    "scripts": {
+      "start": "electron .",
+      "build": "electron-builder"
+    },
+    "author": "Lukach Ishtvan",
+    "license": "ISC",
+    "devDependencies": {
+      "electron": "^30.0.9",
+      "electron-builder": "^24.13.3"
+    },
+    "dependencies": {
+      "axios": "^1.10.0",
+      "electron-store": "^10.1.0",
+      "electron-updater": "^6.1.1",
+      "xlsx": "^0.18.5"
+    },
+    "build": {
+      "appId": "com.helpmicro.manager",
+      "productName": "Help-Micro Manager",
+      "files": [
+        "**/*",
+        "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+        "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+        "!**/node_modules/*.d.ts",
+        "!**/node_modules/.bin",
+        "!**/*.{iml,o,h,obj,py,rb,swp,ts,cpp,c,cc}"
+      ],
+      "win": {
+        "target": "nsis",
+        "icon": "assets/icon.ico"
+      },
+      "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true
+      },
+      "publish": {
+        "provider": "github",
+        "owner": "OWNER",
+        "repo": "REPO"
+      }
+    }
+  }
